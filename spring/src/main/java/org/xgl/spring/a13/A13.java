@@ -1,5 +1,6 @@
 package org.xgl.spring.a13;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class A13 {
@@ -11,9 +12,7 @@ public class A13 {
     }
 
     interface InvocationHandler {
-        void invoke(Method method, Object[] args);
-
-        void invoke();
+        void invoke(Method method, Object[] args) throws Throwable;
     }
 
     static class Target implements Foo {
@@ -23,16 +22,17 @@ public class A13 {
 
         @Override
         public void bar() {
-            System.out.println("bar---foo");
+            System.out.println("target---bar");
         }
     }
 
     public static void main(String[] args) {
          Foo proxy = new $Proxy0(new InvocationHandler() {
              @Override
-             public void invoke(Method method, Object[] args) {
+             public void invoke(Method method, Object[] args) throws InvocationTargetException, IllegalAccessException {
                  System.out.println("before~~~~~");
                  new Target().foo();
+                 method.invoke(new Target(), args);
              }
          });
 
