@@ -1,34 +1,47 @@
 package org.xgl.spring.a13;
 
+
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
-public class $Proxy0 implements A13.Foo {
+public class $Proxy0 extends Proxy implements A13.Foo {
 
-    private A13.InvocationHandler h;
+    //private InvocationHandler h;
 
-    public $Proxy0(A13.InvocationHandler h) {
-        this.h = h;
+    public $Proxy0(InvocationHandler h) {
+        //this.h = h;
+        super(h);
     }
 
     @Override
     public void foo() {
         //1、功能的增强
         try {
-            Method foo = A13.Foo.class.getMethod("foo");
-            h.invoke(foo, new Object[0]);
+            h.invoke(this, foo, new Object[0]);
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void bar() {
+    public int bar() {
         //1、功能的增强
         try {
-            Method bar = A13.Foo.class.getMethod("bar");
-            h.invoke(bar, new Object[0]);
+            return (int) h.invoke(this, bar, new Object[0]);
         } catch (Throwable e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    static Method foo;
+    static Method bar;
+    static {
+        try {
+            foo = A13.Foo.class.getMethod("foo");
+            bar = A13.Foo.class.getMethod("bar");
+        } catch (NoSuchMethodException e) {
+            throw new NoSuchMethodError(e.getMessage());
         }
     }
 }
