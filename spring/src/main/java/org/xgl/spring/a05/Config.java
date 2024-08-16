@@ -12,22 +12,22 @@ import org.xgl.spring.a05.mapper.Mapper2;
 
 import javax.sql.DataSource;
 
-@Configuration
-@ComponentScan("org.xgl.spring.a05")
+//@Configuration
+//@ComponentScan("org.xgl.spring.a05")
 public class Config {
-    @Bean
+    //@Bean
     public Bean1 bean1() {
         return new Bean1();
     }
 
-    @Bean
+    //@Bean
     public SqlSessionFactoryBean sqlSessionFactoryBean(DataSource dataSource) {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         return sqlSessionFactoryBean;
     }
 
-    @Bean(initMethod = "init")
+    //@Bean(initMethod = "init")
     public DruidDataSource dataSource() {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setUrl("jdbc:mysql://localhost:3306/test");
