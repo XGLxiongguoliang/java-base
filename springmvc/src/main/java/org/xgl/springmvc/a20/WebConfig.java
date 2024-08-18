@@ -9,7 +9,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 学习到的要点
@@ -39,5 +46,39 @@ public class WebConfig {
         //DispatcherServlet可以设置在启动时进行初始化，不设置，则在第一次请求的时候初始化
         registrationBean.setLoadOnStartup(webMvcProperties.getServlet().getLoadOnStartup());
         return registrationBean;
+    }
+
+    /**
+     * 如果用DispatcherServlet初始化时默认添加的组件，并不会作为bean，给测试带来困扰
+     * 1、加入RequestMappingHandlerMapping
+     * @return
+     */
+    @Bean
+    public RequestMappingHandlerMapping requestMappingHandlerMapping() {
+        return new RequestMappingHandlerMapping();
+    }
+
+    /**
+     * 添加RequestMappingHandlerAdapter,会替换掉DispatcherServlet默认的四个HandlerAdapter
+     * @return
+     */
+    @Bean
+    public MyRequestMappingHandlerAdapter requestMappingHandlerAdapter() {
+        MyRequestMappingHandlerAdapter handlerAdapter = new MyRequestMappingHandlerAdapter();
+
+        YmlReturnValueHandler ymlReturnValueHandler = new YmlReturnValueHandler();
+        List<HandlerMethodReturnValueHandler> handlerList = new ArrayList<>();
+        handlerList.add(ymlReturnValueHandler);
+
+        TokenArgumentResolver tokenArgumentResolver = new TokenArgumentResolver();
+        List<HandlerMethodArgumentResolver> resolverList = new ArrayList<>();
+        resolverList.add(tokenArgumentResolver);
+
+        handlerAdapter.setCustomArgumentResolvers(resolverList);
+        handlerAdapter.setCustomReturnValueHandlers(handlerList);
+
+        System.out.println("Creating custom MyRequestMappingHandlerAdapter");
+
+        return handlerAdapter;
     }
 }
