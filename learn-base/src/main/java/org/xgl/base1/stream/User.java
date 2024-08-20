@@ -1,5 +1,7 @@
 package org.xgl.base1.stream;
 
+import java.math.BigDecimal;
+
 /**
  * @program stream
  * @description 学生类
@@ -11,6 +13,7 @@ public class User {
     private String name;
     private String birthPlace;
     private String school;
+    private BigDecimal money = BigDecimal.ZERO;
 
     public User() {
     }
@@ -52,5 +55,13 @@ public class User {
 
     public void setSchool(String school) {
         this.school = school;
+    }
+
+    public BigDecimal getMoney() {
+        return money;
+    }
+
+    public void setMoney(BigDecimal money) {
+        this.money = money;
     }
 }

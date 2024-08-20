@@ -1,5 +1,8 @@
 package org.xgl.base1.stream;
 
+import com.alibaba.fastjson.JSONArray;
+
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -27,8 +30,36 @@ public class StreamLearn {
         userList.add(user5);
         userList.add(user6);
 
+        //flatmap
+        List<User> list1 = new ArrayList<>();
+        list1.add(user1);
+        list1.add(user2);
+
+        List<BigDecimal> bigDecimalList = new ArrayList<>();
+        bigDecimalList.add(new BigDecimal(100.2));
+        bigDecimalList.add(new BigDecimal(100.8));
+        bigDecimalList.forEach(a -> {
+            user1.setMoney(user1.getMoney().add(a));
+        });
+
+
+        List<User> list2 = new ArrayList<>();
+        list2.add(user1);
+        list2.add(user3);
+        list2.add(user4);
+        List<List<User>> listALL = new ArrayList<>();
+        listALL.add(list1);
+        listALL.add(list2);
+        List<User> tempList = listALL.stream().flatMap(a -> a.stream()).collect(Collectors.toList());
+        System.out.println("tempList = " + JSONArray.toJSONString(tempList));
+
+        List<User> distinctList = listALL.stream().flatMap(a -> a.stream()).distinct().collect(Collectors.toList());
+        System.out.println("distinctList = " + JSONArray.toJSONString(distinctList));
+
+
         //list转set
         Set<User> userSet = userList.stream().collect(Collectors.toSet());
+        Set<String> userName = userList.stream().map(User::getName).collect(Collectors.toSet());
 
         //list转map
         Map<Integer, User> userMap = userList.stream().collect(Collectors.toMap(User::getAge, Function.identity(), (v1, v2) -> v1));
@@ -57,7 +88,7 @@ public class StreamLearn {
         System.out.println("北京大学学生数量---" + beiJingStudentNum);
 
         //写一个没有无限增长的整数流，不断打印偶数
-        Stream.iterate(0, n -> n + 1).filter(e -> e%2 == 0).forEach(System.out::println);
+        //Stream.iterate(0, n -> n + 1).filter(e -> e%2 == 0).forEach(System.out::println);
 
         System.out.println("------");
     }
