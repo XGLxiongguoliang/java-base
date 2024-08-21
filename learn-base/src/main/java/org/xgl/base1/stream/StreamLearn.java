@@ -30,6 +30,11 @@ public class StreamLearn {
         userList.add(user5);
         userList.add(user6);
 
+        //peek学习
+        List<User> peekList = userList.stream().peek(user -> user.setAge(100)).collect(Collectors.toList());
+        List<User> peekList2 = userList.stream().peek(user -> user.setAge(110)).collect(Collectors.toList());
+        List<User> mapList = userList.stream().peek(user -> user.setAge(100)).collect(Collectors.toList());
+
         //flatmap
         List<User> list1 = new ArrayList<>();
         list1.add(user1);
@@ -41,7 +46,6 @@ public class StreamLearn {
         bigDecimalList.forEach(a -> {
             user1.setMoney(user1.getMoney().add(a));
         });
-
 
         List<User> list2 = new ArrayList<>();
         list2.add(user1);
