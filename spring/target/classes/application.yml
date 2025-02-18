@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://rm-8vb83r0le1izhnk5uno.mysql.zhangbei.rds.aliyuncs.com:3306/msl_supervise?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT
+    username: clxjava
+    password: CLXjava#2023
