@@ -15,11 +15,11 @@ public class JavaClassLoaderPrintPath {
 
     public static void main(String[] args) {
         //启动类加载器
-        URL[] urls = sun.misc.Launcher.getBootstrapClassPath().getURLs();
+        /*URL[] urls = sun.misc.Launcher.getBootstrapClassPath().getURLs();
         System.out.println("启动类加载器");
         for (URL url : urls) {
             System.out.println("---->" + url.toExternalForm());
-        }
+        }*/
 
         //扩展类加载器
         printClassLoader("扩展类加载器", JavaClassLoaderPrintPath.class.getClassLoader());
