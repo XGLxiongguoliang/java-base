@@ -15,9 +15,12 @@ public class Flow {
 
         Node node3 = new ConcreteNode("Node3", "Process Step 2", new ImmediateCancelStrategy());
 
+        Node node4 = new ConcreteNode("Node4", "End Process", new ImmediateCancelStrategy());
+
         // 设置节点间的顺序
         node1.setNext(node2);
         node2.setNext(node3);
+        node3.setNext(node4);
 
         // 设置流程的起始节点
         this.startNode = node1;
@@ -26,12 +29,11 @@ public class Flow {
         nodes.put(node1.id, node1);
         nodes.put(node2.id, node2);
         nodes.put(node3.id, node3);
+        nodes.put(node4.id, node4);
     }
 
     // 执行流程
     public void execute() {
-        if (startNode != null) {
-            startNode.handle();
-        }
+        startNode.handle();
     }
 }

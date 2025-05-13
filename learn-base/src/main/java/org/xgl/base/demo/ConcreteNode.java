@@ -8,7 +8,12 @@ public class ConcreteNode extends Node {
 
     @Override
     public boolean handle() {
-        System.out.println("ConcreteNode " + name + ": Processing...");
+        System.out.println("ConcreteNode " + name);
+        if (nextNode != null) {
+          //  if (cancelStrategy.shouldCancel(nextNode.name)) {
+                nextNode.handle();
+            //}
+        }
         return true;
     }
 }
